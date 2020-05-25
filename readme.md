@@ -60,29 +60,30 @@ Raspberry Pi [Transcoding](https://www.raspberrypi.org/forums/viewtopic.php?t=22
 TvHeadend [Transcoding](https://tvheadend.org/boards/5/topics/13892)
 
 ## Attaching USB exfat drive
+0. [Reference](https://www.shellhacks.com/raspberry-pi-mount-usb-drive-automatically/)
 1. Format drive to exFAT on windows
 2. Plug to pi
 3. Install the module
 
 ``` 
-sudo apt-get install exfat-fuse
-sudo apt-get install exfat-utils
+$ sudo apt-get install exfat-fuse
+$ sudo apt-get install exfat-utils
 ```
 
 4. check the UUID
 
 ``` 
-sudo blkid
+$ sudo blkid
 
 or 
 
-sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL
+$ sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL
 ```
 
 5. Edit fstab to auto mount on boot
 
 ```
-sudo nano fstab
+$ sudo nano fstab
 ```
 
 ```
@@ -93,19 +94,72 @@ UUID=DE37-6D10 /media/exfat exfat defaults,auto,umask=000,users,rw 0 0
 7. create /media/exfat directory for mount
 
 ```
-sudo mkdir /media/exfat
+$ sudo mkdir /media/exfat
 ```
 
 8. Reboot the pi
 
 ```
-sudo shutdown -r now
+$ sudo shutdown -r now
 ```
 
 9. Create a directory on USB drive 
 
 ```
-sudo mkdir /media/exfat/recordings
+$ sudo mkdir /media/exfat/recordings
 ```
 
 6. Goto tvhendend [homepage](http://192.168.1.111:9981/extjs.html) to change the recording path to '/media/exfat/recordings'
+
+
+## To unmount usb
+```
+$ sudo umount /mnt/usb0
+```
+
+## Prepare USB drive format
+1. list the drive
+
+```
+$ sudo fdisk -l
+```
+
+2. edit the disk partition
+
+```console
+$ sudo fdisk /dev/sda*
+
+# n,p,1,<enter>,<enter>,w
+```
+
+3. Format the partition
+
+```
+$ sudo mkfs -t ext4 /dev/sda1*
+```
+
+4. Create a directory to mount the filesystem
+
+```
+$ sudo mkdir /media/ext4
+```
+
+5. Mount the partition
+
+```
+$ sudo mount /dev/sda1* /media/ext4
+```
+
+## Find files
+
+* Find large files (10MB+)
+
+```
+$ sudo find / -type f -size +10000k -exec ls -lh {} \; | awk '{ print $NF ": " $5 }' 
+```
+
+* Find largest folder (current working directory)
+
+```
+$ sudo du -hsx * | sort -rh | head -10 
+```
