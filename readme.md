@@ -36,5 +36,55 @@ Getting [Started](https://www.raspberrypi.org/app/uploads/2018/10/Getting-starte
 * ID_SC - pin#28.
 
 [Sony CXD2880](https://elinux.org/images/2/2f/ELCE2018-poster-Sony-rpi-cxd2880.pdf)
+Connecting Multiple Devices [SPI](http://www.learningaboutelectronics.com/Articles/Multiple-SPI-devices-to-an-arduino-microcontroller.php)
 
-Connecting Multiple Devices [SPI] (http://www.learningaboutelectronics.com/Articles/Multiple-SPI-devices-to-an-arduino-microcontroller.php)
+## Attached USB exfat drive
+1. Format drive to exFAT on windows
+2. Plug to pi
+3. Install the module
+
+``` 
+sudo apt-get install exfat-fuse
+sudo apt-get install exfat-utils
+```
+
+4. check the UUID
+
+``` 
+sudo blkid
+
+or 
+
+sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL
+```
+
+5. Edit fstab to auto mount on boot
+
+```
+sudo nano fstab
+```
+
+```
+UUID=DE37-6D10 /media/exfat exfat defaults,auto,umask=000,users,rw 0 0
+
+```
+
+7. create /media/exfat directory for mount
+
+```
+sudo mkdir /media/exfat
+```
+
+8. Reboot the pi
+
+```
+sudo shutdown -r now
+```
+
+9. Create a directory on USB drive 
+
+```
+sudo mkdir /media/exfat/recordings
+```
+
+6. Goto tvhendend [homepage](http://192.168.1.111:9981/extjs.html) to change the recording path to '/media/exfat/recordings'
