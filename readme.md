@@ -20,6 +20,22 @@ Getting [Started](https://www.raspberrypi.org/app/uploads/2018/10/Getting-starte
   + okto* (HD)
 * 586000 Hz 
   + Ch U (HD)
+  
+## Alternative Frenquency
+* 585000 Hz
+  + Ch 5 (HD)
+  + Suria (HD)
+  + Ch 8 (HD)
+  + Vasantham (HD)
+* 610000 Hz
+  + Ch 8 (HD)
+  + Vasantham (HD)
+* 698000 Hz  
+  + Ch 8 (HD)
+  + Vasantham (HD)
+* 862000 Hz  
+  + Ch 8 (HD)
+  + Vasantham (HD)
 
 ## References
 [raspberry pi pinout](https://pinout.xyz/#)
@@ -38,7 +54,12 @@ Getting [Started](https://www.raspberrypi.org/app/uploads/2018/10/Getting-starte
 [Sony CXD2880](https://elinux.org/images/2/2f/ELCE2018-poster-Sony-rpi-cxd2880.pdf)
 Connecting Multiple Devices [SPI](http://www.learningaboutelectronics.com/Articles/Multiple-SPI-devices-to-an-arduino-microcontroller.php)
 
-## Attached USB exfat drive
+Connecting Multiple Devices [SPI] (http://www.learningaboutelectronics.com/Articles/Multiple-SPI-devices-to-an-arduino-microcontroller.php)
+
+Raspberry Pi [Transcoding](https://www.raspberrypi.org/forums/viewtopic.php?t=227359)
+TvHeadend [Transcoding](https://tvheadend.org/boards/5/topics/13892)
+
+## Attaching USB exfat drive
 1. Format drive to exFAT on windows
 2. Plug to pi
 3. Install the module
