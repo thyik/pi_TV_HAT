@@ -59,6 +59,8 @@ Connecting Multiple Devices [SPI] (http://www.learningaboutelectronics.com/Artic
 Raspberry Pi [Transcoding](https://www.raspberrypi.org/forums/viewtopic.php?t=227359)
 TvHeadend [Transcoding](https://tvheadend.org/boards/5/topics/13892)
 
+[pimylifeup](https://pimylifeup.com/raspberry-pi-exfat/)
+
 ## Attaching USB exfat drive
 0. [Reference](https://www.shellhacks.com/raspberry-pi-mount-usb-drive-automatically/)
 1. Format drive to exFAT on windows
@@ -83,11 +85,12 @@ $ sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL
 5. Edit fstab to auto mount on boot
 
 ```
-$ sudo nano fstab
+$ sudo nano /etc/fstab
 ```
 
 ```
 UUID=DE37-6D10 /media/exfat exfat defaults,auto,umask=000,users,rw 0 0
+UUID=A697-5A33 /media/hdd_exfat exfat defaults,auto,umask=000,users,rw 0 0
 
 ```
 
@@ -163,3 +166,52 @@ $ sudo find / -type f -size +10000k -exec ls -lh {} \; | awk '{ print $NF ": " $
 ```
 $ sudo du -hsx * | sort -rh | head -10 
 ```
+
+## methods to copy files
+
+* cp : normal local file copying
+  + syntax : `cp <source> <dest>` 
+
+* curl : copy to / from ftp / http / file etc with progress speed
+  + syntax : `curl -o <dest> <source>`
+
+```
+$ curl -O ../hdd_extfat/recordings/file.mp4 file:///media/exfat/recordings/file1.mp4
+
+# sftp protocol
+$ curl -o ./a.ts -k "ftp://192.168.1.111/media/hdd_exfat/recordings/test.ts" --user "username:password"
+
+```
+
+* rsync : copying & sychronizing files and directories remotely and locally
+  + syntax : `rsync <option> <source> <dest>`
+  + `-v` : verbose
+  + `-r` : recursive
+  + `-a` : archive mode
+  + `-z` : compress file data
+  + `-h` : human-readable
+  + `-e` : specify protocol (eg : ssh)
+  + `--progress` : show progress 
+  
+```
+$ rsync -avz ./recordings/file1.mp4 ../hdd_exfat/recordings/file.mp4
+
+# from remote path
+$ rsync -avz recordings/ root@192.168.1.111:/media/hdd_exfat/recordings
+
+# via SSH from remote to local
+$ rsync -avzhe ssh pi@192.168.1.111:/media/exfat/recordings ./recordings/
+```
+
+* tar : compress files into single file
+  + syntax : `tar `
+  + `-v` : verbose output
+  + `-c` : create new archive
+  + `-x` : extract files from archive
+  + `-z` : filter archive throug gzip
+  + `-j` : filter archive through bzip2
+  + `-f file.tar.gz` : use archive file
+  
+```
+
+``` 
