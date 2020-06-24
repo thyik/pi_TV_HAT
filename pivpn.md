@@ -1,7 +1,7 @@
 # Pi VPN
 
 Type of VPN
-* WireGuard : new light-weigth and fast
+* WireGuard : new light-weight and fast
 * OpenVPN : More common VPN
 
 ```
