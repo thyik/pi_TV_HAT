@@ -13,7 +13,7 @@ $ curl -L https://install.pivpn.io | bash
 
 $ pivpn add
 
- config file will be staore at '/home/pi/configs'
+ config file will be store at '/home/pi/configs'
 
 $ pivpn help
 
